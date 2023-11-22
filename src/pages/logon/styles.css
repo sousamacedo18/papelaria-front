@@ -20,3 +20,12 @@ input{
     border-radius: 5px;
     height: 18px;
 }
+img{
+    width: 250px;
+    
+}
+.logo{
+display: flex;
+justify-content: center;
+
+}
