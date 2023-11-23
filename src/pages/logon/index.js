@@ -2,15 +2,19 @@ import './styles.css'
 import Logo from '../../assets/img/logo.jpg'
 
 
+
+
 export default function Logon(){
-   return(
+  
+
+    return(
     <div className="logon-container">
         <div className='logo'>
            <img src={Logo} />
         </div>
         <section className="form">
             <h1>Faça seu login</h1>
-            <form >
+            <form  >
                 <input placeholder="Email" />
                 <input placeholder="Senha" type='password' />
                 <button type="submit">Entrar</button>

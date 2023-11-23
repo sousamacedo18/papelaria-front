@@ -1,0 +1,23 @@
+*{
+    padding: 0;
+    margin:0;
+}
+.dashboard-container{
+    background-color: #6d8d8c;
+    height: 100vh;
+    display: flex;
+    flex-direction: row;
+    width: 90%;
+    margin:auto;
+}
+.menu{
+    width: 30%;
+    background-color: #ffff;
+    margin: 5px;
+}
+.principal{
+    width: 70%;
+    background-color: #f8f8f8;
+    margin: 5px;
+}
+
