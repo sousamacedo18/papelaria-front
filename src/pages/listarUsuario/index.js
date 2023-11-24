@@ -1,8 +1,8 @@
-import './styles.css'
+import '../../pages/global.css';
 import Logo from '../../assets/img/logo.jpg'
 import Menu from '../../componentes/menu'
 
-export default function Dashboard(){
+export default function Listausuario(){
    return(
     <div className="dashboard-container">
         <div className='menu'>
@@ -10,7 +10,7 @@ export default function Dashboard(){
         <Menu />
         </div>
         <div className='principal'>
-        <h1>Página Principal</h1>
+        <h1>Lista de Usuários</h1>
         </div>
     </div>
 
