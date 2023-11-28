@@ -3,7 +3,7 @@
     margin:0;
 }
 .dashboard-container{
-    background-color: #6d8d8c;
+    background-color: #0056b3;
     height: 100vh;
     display: flex;
     flex-direction: row;
@@ -19,5 +19,22 @@
     width: 80%;
     background-color: #f8f8f8;
     margin: 5px;
+    padding: 5px;
 }
+table{
+    width: 100%;
+    
+    border-collapse: collapse;
+
+}
+td{
+    border: solid 0.5px #adb9d3;
+    padding: 5px;
+}
+
+.botoes:hover{
+    cursor: pointer;
+    background-color: silver;
+}
+
 
