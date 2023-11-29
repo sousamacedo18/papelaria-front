@@ -36,5 +36,20 @@ td{
     cursor: pointer;
     background-color: silver;
 }
-
-
+.btn-novo{
+   padding: 10px;
+   background-color: green;
+   color: #f8f8f8;
+   border-radius: 5px;
+   border:solid 0.5px #adb9d3;
+   margin-bottom: 10px;
+   text-decoration: none;
+   display: flex;
+   width: 120px;
+}
+.btn-novo:hover{
+    background-color: rgb(55, 198, 55);
+    cursor: pointer;
+ 
+  
+}

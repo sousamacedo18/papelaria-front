@@ -3,6 +3,11 @@ import Logo from '../../assets/img/logo.jpg'
 import Menu from '../../componentes/menu'
 import{ FiEdit,FiTrash,FiDelete, FiFilePlus }from "react-icons/fi";
 import { Bs5Circle } from "react-icons/bs";
+import { confirmAlert } from 'react-confirm-alert'; // Import
+import 'react-confirm-alert/src/react-confirm-alert.css'; // Import css
+import {Link} from 'react-router-dom';
+import Head from '../../componentes/Head';
+
 export default function Listausuario(){
 
     const dados=[
@@ -11,15 +16,36 @@ export default function Listausuario(){
         {id:3,nome:"Nilson",email:"nilson@gmail.com",senha:"321"},
 
     ]
+  const  apagar = (id) => {
+      confirmAlert({
+        title: 'Excluir Usuário',
+        message: 'Deseja realmente excluir esse usuário?',
+        buttons: [
+          {
+            label: 'Sim',
+            onClick: () => alert(`Você apagou o usuário id:${id}`)
+          },
+          {
+            label: 'Não',
+            onClick: () => alert('Click No')
+          }
+        ]
+      });
+    };
+  
+
    return(
     <div className="dashboard-container">
+      
         <div className='menu'>
      
         <Menu />
         </div>
         <div className='principal'>
-        <h1>Lista de Usuários</h1>
-        <button className='btn-novo'>Novo Cadastro</button>
+        <Head title="Lista de Usuários" />
+        <div>
+        <Link className='btn-novo'>Novo Cadastro</Link>
+        </div>
         <table className="table">
            <tr>
                 <th>Id</th>
@@ -38,7 +64,13 @@ export default function Listausuario(){
                     <td className='botoes'> 
                       <FiEdit size={18} color='#3a5795'  />  
                     </td>    
-                    <td className='botoes'> <FiTrash size={18} color='red' /> </td>    
+                    <td className='botoes'> 
+                          <FiTrash 
+                          size={18} 
+                          color='red'
+                          onClick={(e)=>apagar(linha.id)} 
+                          /> 
+                    </td>    
                     
                   </tr>  
                 )
