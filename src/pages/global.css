@@ -54,15 +54,18 @@ td{
   
 }
 
-input{
-    padding: 8px;
-    border:black;
-    
-}
-input:focus{
+.form-cadastro input{
+    width: 100%;
+    height: 30px;
+    color:#333;
+    border: 1px solid #dcdce6;
+    border-radius:8px;
+   
+} 
+.form-cadastro input:focus{
     box-shadow: 0 0 0 0;
-    border:0 none;
-    outline: 0;
+    border: 1px solid #dcdce6;
+    outline:0 ;
 }
 .btn-save{
     padding: 10px;
@@ -106,4 +109,5 @@ input:focus{
     /* Espaçamento interno para o conteúdo */
    
     border-radius: 5px;
+    align-items: center;
 }
