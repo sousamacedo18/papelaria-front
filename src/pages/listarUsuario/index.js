@@ -10,12 +10,13 @@ import Head from '../../componentes/Head';
 
 export default function Listausuario(){
 
-    const dados=[
-        {id:1,nome:"Carlos",email:"carlos@gmail.com",senha:"123"},
-        {id:2,nome:"Felipe",email:"felipe@gmail.com",senha:"321"},
-        {id:3,nome:"Nilson",email:"nilson@gmail.com",senha:"321"},
+    // const dados=[
+    //     {id:1,nome:"Carlos",email:"carlos@gmail.com",senha:"123"},
+    //     {id:2,nome:"Felipe",email:"felipe@gmail.com",senha:"321"},
+    //     {id:3,nome:"Nilson",email:"nilson@gmail.com",senha:"321"},
 
-    ]
+    // ]
+    const banco =JSON.parse(localStorage.getItem("cd-usuarios") || "[]");
   const  apagar = (id) => {
       confirmAlert({
         title: 'Excluir Usuário',
@@ -55,7 +56,7 @@ export default function Listausuario(){
                 <th></th>
             </tr>
             {
-               dados.map((linha)=>{
+               banco.map((linha)=>{
                 return(
                   <tr key={linha.toString()}>
                     <td>{linha.id}</td>    
