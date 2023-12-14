@@ -8,10 +8,12 @@ import { confirmAlert } from 'react-confirm-alert'; // Import
 import 'react-confirm-alert/src/react-confirm-alert.css'; // Import css
 import {Link} from 'react-router-dom';
 import Head from '../../componentes/Head';
+import { useNavigate} from 'react-router-dom';
 
 export default function Listausuario(){
 const [dados,setDados] = useState([]);
 const [banco,setBanco] = useState([]);
+const navigate=useNavigate();
     // const dados=[
     //     {id:1,nome:"Carlos",email:"carlos@gmail.com",senha:"123"},
     //     {id:2,nome:"Felipe",email:"felipe@gmail.com",senha:"321"},
@@ -79,7 +81,9 @@ const [banco,setBanco] = useState([]);
                     <td>{linha.nome}</td>    
                     <td>{linha.email}</td>    
                     <td className='botoes'> 
-                      <FiEdit size={18} color='#3a5795'  />  
+                    <Link to={`/editarusuario/${linha.id}`}>
+                      <FiEdit size={18} color='#3a5795'  /> 
+                    </Link> 
                     </td>    
                     <td className='botoes'> 
                           <FiTrash 

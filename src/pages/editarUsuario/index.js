@@ -7,9 +7,10 @@ import { MdCancel } from "react-icons/md";
 import { FaSave } from "react-icons/fa";
 import {useNavigate,useParams} from 'react-router-dom';
 import Head from '../../componentes/Head';
+import { wait } from '@testing-library/user-event/dist/utils';
 
 export default function Editarusuario(){
-  const id = useParams.id;
+  let { id } = useParams();
   const navigate =useNavigate();
   const [nome,setNome]  = useState("");
   const [email,setEmail]  = useState("");
@@ -23,16 +24,21 @@ export default function Editarusuario(){
       senha
   }
   useEffect(()=>{
-    mostrardados();
-  },[])
-  function mostrardados(){
+    mostrardados(id);
+  },[id])
+ async function mostrardados(id){
     setBanco(JSON.parse(localStorage.getItem("cd-usuarios") || "[]"));
-    let dadosnovos = banco.filter(item => item.id == id);
-    setNome(dadosnovos.nome);
-    setEmail(dadosnovos.email);
-    setSenha(dadosnovos.senha);
+    let dadosnovos = banco.filter(item => item.id === id);
+   if (dadosnovos.length > 0) {
+    setNome(dadosnovos[0].nome);
+    setEmail(dadosnovos[0].email);
+    setSenha(dadosnovos[0].senha);
 
+  }else {
+    // Lide com o caso em que nenhum dado é encontrado para o ID especificado
+    console.error("Nenhum dado encontrado para o ID especificado");
   }
+}
 
 
   function salvardados(e){
