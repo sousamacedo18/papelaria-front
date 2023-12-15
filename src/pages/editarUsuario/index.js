@@ -16,6 +16,8 @@ export default function Editarusuario(){
   const [email,setEmail]  = useState("");
   const [senha,setSenha]  = useState("");
   const [banco,setBanco] = useState([]);
+  const [status,setStatus] = useState(0);
+
   
   
   const usuario={     
@@ -23,22 +25,35 @@ export default function Editarusuario(){
       email,
       senha
   }
-  useEffect(()=>{
+  useEffect(() => {
     mostrardados(id);
-  },[id])
- async function mostrardados(id){
-    setBanco(JSON.parse(localStorage.getItem("cd-usuarios") || "[]"));
-    let dadosnovos = banco.filter(item => item.id === id);
-   if (dadosnovos.length > 0) {
-    setNome(dadosnovos[0].nome);
-    setEmail(dadosnovos[0].email);
-    setSenha(dadosnovos[0].senha);
+    if(status===1){
+      mostrardados(id);
+      setStatus(1);
+    }
+  
+  }, [banco]); // Sem dependências, será executado apenas na montagem do componente
 
-  }else {
-    // Lide com o caso em que nenhum dado é encontrado para o ID especificado
-    console.error("Nenhum dado encontrado para o ID especificado");
+ async function mostrardados(id){
+
+    setBanco(JSON.parse(localStorage.getItem("cd-usuarios") || "[]"));
+    // let dadosnovos = banco.filter(item => item.id === id);
+
+    banco.map((linha)=>{
+      if(linha.id===id){
+        setNome(linha.nome);
+        setEmail(linha.email);
+        setSenha(linha.senha);
+      }
+
+
+    });
+    
+
+
+
   }
-}
+
 
 
   function salvardados(e){
