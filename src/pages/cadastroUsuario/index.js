@@ -8,6 +8,9 @@ import { FaSave } from "react-icons/fa";
 import {useNavigate} from 'react-router-dom';
 import Head from '../../componentes/Head';
 
+
+//fiz uma alteração aqui
+
 export default function Cadastrousuario(){
   const navigate =useNavigate();
   const [nome,setNome]  = useState("");
