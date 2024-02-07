@@ -8,21 +8,22 @@ import { FaSave } from "react-icons/fa";
 import {useNavigate,useParams} from 'react-router-dom';
 import Head from '../../componentes/Head';
 
-export default function Editarusuario(){
+export default function Editarproduto(){
   let { id } = useParams();
   const navigate =useNavigate();
-  const [nome,setNome]  = useState("");
-  const [email,setEmail]  = useState("");
-  const [senha,setSenha]  = useState("");
+  const [status,setStatus]  = useState("");
+  const [descricao,setDescricao]  = useState("");
+  const [estoque_maximo,setEstoque_maximo]  = useState("");
+  const [estoque_minimo,setEstoque_minino]  = useState("");
   const [banco,setBanco] = useState([]);
-  const [status, setStatus] = useState(true);
+
   
-  
-  const usuario={    
+  const produto={    
      id, 
-      nome,
-      email,
-      senha
+      status,
+      descricao,
+      estoque_minimo,
+      estoque_maximo
   }
   useEffect(()=>{
   
@@ -32,14 +33,15 @@ export default function Editarusuario(){
    
   },[])
   async function mostrardados(idu) {
-    let listaUser =JSON.parse(localStorage.getItem("cd-usuarios"));
+    let listaUser =JSON.parse(localStorage.getItem("cd-produtos"));
       
            listaUser.
                filter(value => value.id ==idu).
                map(value => {
-                   setNome(value.nome);
-                   setEmail(value.email);
-                   setSenha(value.senha);
+                   setStatus(value.status);
+                   setDescricao(value.descricao);
+                   setEstoque_minino(value.estoque_minimo);
+                   setEstoque_maximo(value.estoque_maximo);
                    
        
        })
@@ -50,21 +52,23 @@ export default function Editarusuario(){
     e.preventDefault();
 
   let i=0;
-  if(nome=="")
+  if(status=="")
   i++;
- else if(email=="")
+ else if(descricao=="")
   i++;
- else if(senha=="")
+ else if(estoque_maximo===0 || estoque_maximo==="")
+ i++;
+ else if(estoque_minimo===0 || estoque_minimo==="")
  i++;
 if(i==0)
  {
-   const banco =JSON.parse(localStorage.getItem("cd-usuarios") || "[]");
+   const banco =JSON.parse(localStorage.getItem("cd-produtos") || "[]");
    let dadosnovos = banco.filter(item => item.id !== id);
    console.log(dadosnovos);
-   dadosnovos.push(usuario);
-   localStorage.setItem("cd-usuarios",JSON.stringify(dadosnovos));
-   alert("Usuário salvo com sucesso");
-   navigate('/listausuario');
+   dadosnovos.push(produto);
+   localStorage.setItem("cd-produtos",JSON.stringify(dadosnovos));
+   alert( "Produto salvo com sucesso");
+   navigate('/listaproduto');
  }else{
   alert("Verifique! Há campos vazios!")
  }
@@ -78,25 +82,31 @@ if(i==0)
         <Menu />
         </div>
         <div className='principal'>
-        <Head title="Editar Usuário" />
+        <Head title="Editar Produto" />
         <div className='form-container'>
         <form className='form-cadastro' onSubmit={salvardados} >
             <input 
             type='text'
-            value={nome}
-            onChange={e=>setNome(e.target.value)}
-             placeholder='Digite o nome do usuário'
+            value={status}
+            onChange={e=>setStatus(e.target.value)}
+             placeholder='Digite o status'
               />
             <input 
-                type='email' 
-                value={email}
-                onChange={e=>setEmail(e.target.value)}
-                placeholder='Digite o email'
+                type='text' 
+                value={descricao}
+                onChange={e=>setDescricao(e.target.value)}
+                placeholder='Digite a descrição'
              />
             <input 
-                    type='password' 
-                    value={senha}
-                    onChange={e=>setSenha(e.target.value)}
+                    type='number' 
+                    value={estoque_minimo}
+                    onChange={e=>setEstoque_minino(e.target.value)}
+                    placeholder='Digite a senha' 
+            />
+            <input 
+                    type='number' 
+                    value={estoque_maximo}
+                    onChange={e=>setEstoque_maximo(e.target.value)}
                     placeholder='Digite a senha' 
             />
             

@@ -9,7 +9,9 @@ export default function Logon(){
 const navigate = useNavigate();
 const [email,setEmail]=useState();
 const [senha,setSenha]=useState();
-
+const log={
+    email
+}
 const logar =(e)=>{
 e.preventDefault();
 let banco =JSON.parse(localStorage.getItem("cd-usuarios") || "[]");
@@ -17,6 +19,7 @@ let banco =JSON.parse(localStorage.getItem("cd-usuarios") || "[]");
 let dadosnovos = banco.filter(item => item.email === email && item.senha === senha);
 console.log(banco);
 if(dadosnovos.length>0){
+    sessionStorage.setItem("log-usuario",JSON.stringify(log));
     navigate('/dashboard');
 }else{
     alert("Dados incorretos!!!");
