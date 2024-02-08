@@ -79,7 +79,7 @@ useEffect(()=>{
  i++;
 if(i==0)
  {
- 
+   const  banco =JSON.parse(localStorage.getItem("cd-entradas"));
   
    banco.push(entrada);
    localStorage.setItem("cd-entradas",JSON.stringify(banco));
