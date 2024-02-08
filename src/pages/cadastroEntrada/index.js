@@ -26,6 +26,40 @@ export default function Cadastroentrada(){
       valor_unitario,
       data_entrada
   }
+  const dadosestoque={
+    id:Date.now().toString(36)+Math.floor(Math.pow(10,12)+Math.random()*9*Math.pow(10,12)).toString(36),
+    id_produto,
+    qtde,
+    valor_unitario
+  }
+
+
+  function alterarEstoque(idproduto, quantidade, valor) {
+    const estoque = JSON.parse(localStorage.getItem("cd-estoques") || "[]");
+  
+ 
+    const produtoExistente = estoque.find(item => item.id_produto === idproduto);
+  
+    if (produtoExistente) {
+
+      let dadosnovos = estoque.filter(item => item.id_produto !== idproduto);
+      const updateestoque={
+                    id:produtoExistente.id,
+                    id_produto:produtoExistente.id_produto,
+                    qtde:produtoExistente.qtd+=quantidade,
+                    valor_unitario:produtoExistente.valor_unitario=valor
+         }
+         dadosnovos.push(updateestoque);
+         localStorage.setItem("cd-estoques", JSON.stringify(dadosnovos));
+    } else {
+    
+
+      estoque.push(dadosestoque);
+    }
+  
+    // Atualizar o localStorage com os novos dados do estoque
+    localStorage.setItem("cd-estoques", JSON.stringify(estoque));
+  }
   
 useEffect(()=>{
   mostrarproduto();
@@ -45,9 +79,11 @@ useEffect(()=>{
  i++;
 if(i==0)
  {
-   const banco =JSON.parse(localStorage.getItem("cd-entradas") || "[]");
+ 
+  
    banco.push(entrada);
    localStorage.setItem("cd-entradas",JSON.stringify(banco));
+   alterarEstoque(id_produto,qtde,valor_unitario) 
    alert("Entrada salvo com sucesso");
    navigate('/listaentrada');
  }else{

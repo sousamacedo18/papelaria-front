@@ -64,7 +64,6 @@ if(i==0)
  {
    const banco =JSON.parse(localStorage.getItem("cd-produtos") || "[]");
    let dadosnovos = banco.filter(item => item.id !== id);
-   console.log(dadosnovos);
    dadosnovos.push(produto);
    localStorage.setItem("cd-produtos",JSON.stringify(dadosnovos));
    alert( "Produto salvo com sucesso");
