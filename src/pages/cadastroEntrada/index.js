@@ -46,7 +46,7 @@ export default function Cadastroentrada(){
       const updateestoque={
                     id:produtoExistente.id,
                     id_produto:produtoExistente.id_produto,
-                    qtde:produtoExistente.qtd+=quantidade,
+                    qtde:produtoExistente.qtde+quantidade,
                     valor_unitario:produtoExistente.valor_unitario=valor
          }
          dadosnovos.push(updateestoque);
