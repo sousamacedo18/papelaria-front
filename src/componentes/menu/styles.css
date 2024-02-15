@@ -17,3 +17,17 @@ nav{
 .link:hover{
  background-color:#0056b3 ;
 }
+.link_estoque{
+
+    text-decoration: none;
+    background-color: red;
+    border-radius: 5px;
+    padding: 10px;
+    color:#ffffff;
+    width: 85%;
+    margin:auto;
+    margin-bottom: 8px;
+}
+.link_estoque:hover{
+ background-color:rebeccapurple ;
+}

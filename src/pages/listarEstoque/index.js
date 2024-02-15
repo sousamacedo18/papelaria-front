@@ -7,46 +7,59 @@ import { Bs5Circle } from "react-icons/bs";
 import { confirmAlert } from 'react-confirm-alert'; // Import
 import 'react-confirm-alert/src/react-confirm-alert.css'; // Import css
 import {Link} from 'react-router-dom';
-import moment from 'moment';
 import Head from '../../componentes/Head';
 import { useNavigate} from 'react-router-dom';
 
-export default function Listaentrada(){
+export default function Listaestoque(){
 const [dados,setDados] = useState([]);
 const [banco,setBanco] = useState([]);
 const navigate=useNavigate();
+    // const dados=[
+    //     {id:1,nome:"Carlos",email:"carlos@gmail.com",senha:"123"},
+    //     {id:2,nome:"Felipe",email:"felipe@gmail.com",senha:"321"},
+    //     {id:3,nome:"Nilson",email:"nilson@gmail.com",senha:"321"},
 
+    // ]
     useEffect(()=>{
       mostrardados();
     },[])
-
-    function mostrardados()
-    {
-      setBanco(JSON.parse(localStorage.getItem("cd-entradas") || "[]"));
-    }
-
     function formatReal(valor) {
       let valorFormatado = valor.replace(/\D/g, ''); // Remove caracteres não numéricos
       valorFormatado = valorFormatado.replace(/(\d{2})(\d{3})(\d{3})(\d{2})/, '$1.$2.$3,$4'); // Formata com pontos e vírgulas
       return `R$ ${valorFormatado}`;
     }
-    function formatarData(data) {
-      return moment(data).format('DD/MM/YYYY');
-    }
 
-  
+    function mostrardados()
+    {
+      setBanco(JSON.parse(localStorage.getItem("cd-estoques") || "[]"));
+    }
+    function mostrarnome(idproduto){
+      let nome= "";
+       const listarproduto = JSON.parse(localStorage.getItem("cd-produtos") || "[]");
+       listarproduto.
+                    filter(value => value.id ==idproduto).
+                    map(value => {
+                     
+                    nome=value.descricao;
+    
+                        
+    
+                  })
+            return nome;
+            
+      }
      const  apagar = (id) => {
       confirmAlert({
-        title: 'Excluir Entrada',
-        message: 'Deseja realmente excluir esse Entrada?',
+        title: 'Excluir Estoque',
+        message: 'Deseja realmente excluir o estoque desse produto?',
         buttons: [
           {
             label: 'Sim',
             onClick: () => {
               let dadosnovos = banco.filter(item => item.id !== id);
-              localStorage.setItem("cd-entradas", JSON.stringify(dadosnovos));
+              localStorage.setItem("cd-estoques", JSON.stringify(dadosnovos));
               setBanco(dadosnovos); // Atualiza o estado com os dados filtrados
-              alert(`Você apagou a entrada id:${id}`);
+              alert(`Você apagou o estoque id:${id}`);
             }
             
           },
@@ -57,21 +70,7 @@ const navigate=useNavigate();
         ]
       });
     };
-  function mostrarnome(idproduto){
-  let nome= "";
-   const listarproduto = JSON.parse(localStorage.getItem("cd-produtos") || "[]");
-   listarproduto.
-                filter(value => value.id ==idproduto).
-                map(value => {
-                 
-                nome=value.descricao;
-
-                    
-
-              })
-        return nome;
-        
-  }
+  
 
    return(
     <div className="dashboard-container">
@@ -81,17 +80,16 @@ const navigate=useNavigate();
         <Menu />
         </div>
         <div className='principal'>
-        <Head title="Lista de Entrada" />
+        <Head title="Lista de Estoque de Produtos" />
         <div>
-        <Link to="/cadastroentrada" className='btn-novo'>Novo Cadastro</Link>
+        <Link to="/cadastroproduto" className='btn-novo'>Novo Cadastro</Link>
         </div>
         <table className="table">
            <tr>
                 <th>Id</th>
-                <th>id produto </th>
+                <th>Produto</th>
                 <th>Quantidade</th>
                 <th>Valor Unitário</th>
-                <th>Data Entrada</th>
                 <th></th>
                 <th></th>
             </tr>
@@ -103,9 +101,9 @@ const navigate=useNavigate();
                     <td>{mostrarnome(linha.id_produto)}</td>    
                     <td>{linha.qtde}</td>    
                     <td>{formatReal(linha.valor_unitario)}</td>    
-                    <td>{formatarData(linha.data_entrada)}</td>    
+         
                     <td className='botoes'> 
-                    <Link to={`/editarentrada/${linha.id}`}>
+                    <Link to={`/editarproduto/${linha.id}`}>
                       <FiEdit size={18} color='#3a5795'  /> 
                     </Link> 
                     </td>    

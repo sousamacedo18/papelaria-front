@@ -7,8 +7,12 @@
 form{
     display: flex;
     flex-direction: column;
+    border: solid 0.5px #cfc1d9;
+    border-radius: 5px;
     width: 300px;
+    padding: 20px;
     margin:auto;
+    margin-top: 20px;
 }
 h1{
     text-align: center;
@@ -28,4 +32,19 @@ img{
 display: flex;
 justify-content: center;
 
+}
+.btn-entrar{
+    padding: 10px;
+    background-color: blue;
+    color: white;
+    border: solid 1px white;
+    border-radius: 5px;
+    cursor: pointer;
+}
+a{
+    text-decoration: none;
+    color: blue;
+}
+p{
+    margin-top: 10px;
 }

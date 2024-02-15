@@ -1,6 +1,7 @@
 import './styles.css'
 import Logo from '../../assets/img/logo.jpg'
 import Menu from '../../componentes/menu'
+import Head from '../../componentes/Head';
 
 let usuario =JSON.parse(sessionStorage.getItem("log-usuario") || "[]");
 export default function Dashboard(){
@@ -11,8 +12,8 @@ export default function Dashboard(){
         <Menu />
         </div>
         <div className='principal'>
-        <h1>Página Principal</h1>
-        <h1>{usuario.email}</h1>
+        <Head title="Página Inicial" />
+     
         </div>
     </div>
 

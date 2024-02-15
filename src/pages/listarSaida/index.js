@@ -22,7 +22,7 @@ const navigate=useNavigate();
 
     function mostrardados()
     {
-      setBanco(JSON.parse(localStorage.getItem("cd-entradas") || "[]"));
+      setBanco(JSON.parse(localStorage.getItem("cd-saidas") || "[]"));
     }
 
     function formatReal(valor) {
@@ -38,15 +38,15 @@ const navigate=useNavigate();
      const  apagar = (id) => {
       confirmAlert({
         title: 'Excluir Entrada',
-        message: 'Deseja realmente excluir esse Entrada?',
+        message: 'Deseja realmente excluir essa Saída?',
         buttons: [
           {
             label: 'Sim',
             onClick: () => {
               let dadosnovos = banco.filter(item => item.id !== id);
-              localStorage.setItem("cd-entradas", JSON.stringify(dadosnovos));
+              localStorage.setItem("cd-saidas", JSON.stringify(dadosnovos));
               setBanco(dadosnovos); // Atualiza o estado com os dados filtrados
-              alert(`Você apagou a entrada id:${id}`);
+              alert(`Você apagou a saída de id:${id}`);
             }
             
           },
@@ -81,17 +81,17 @@ const navigate=useNavigate();
         <Menu />
         </div>
         <div className='principal'>
-        <Head title="Lista de Entrada" />
+        <Head title="Lista de Saída" />
         <div>
-        <Link to="/cadastroentrada" className='btn-novo'>Novo Cadastro</Link>
+        <Link to="/cadastrosaida" className='btn-novo'>Novo Cadastro</Link>
         </div>
         <table className="table">
            <tr>
                 <th>Id</th>
-                <th>id produto </th>
+                <th>Produto </th>
                 <th>Quantidade</th>
                 <th>Valor Unitário</th>
-                <th>Data Entrada</th>
+                <th>Data Saída</th>
                 <th></th>
                 <th></th>
             </tr>
@@ -103,7 +103,7 @@ const navigate=useNavigate();
                     <td>{mostrarnome(linha.id_produto)}</td>    
                     <td>{linha.qtde}</td>    
                     <td>{formatReal(linha.valor_unitario)}</td>    
-                    <td>{formatarData(linha.data_entrada)}</td>    
+                    <td>{formatarData(linha.data_saida)}</td>    
                     <td className='botoes'> 
                     <Link to={`/editarentrada/${linha.id}`}>
                       <FiEdit size={18} color='#3a5795'  /> 

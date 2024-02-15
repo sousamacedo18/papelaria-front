@@ -11,24 +11,39 @@ import Head from '../../componentes/Head';
 
 
 
-export default function Cadastroentrada(){
+export default function Cadastrosaida(){
   const navigate =useNavigate();
   const [id_produto,setId_produto]  = useState("");
   const [qtde,setQtde]  = useState("");
   const [valor_unitario,setValor_unitario]  = useState("");
-  const [data_entrada,setData_entrada]  = useState("");
+  const [data_saida,setData_sainda]  = useState("");
   const [produto,setProduto] = useState([]);
+  const [qtd_estoque,setQtd_estoque] =useState(0);
 
   
-  const entrada={
+  const saida={
       id:Date.now().toString(36)+Math.floor(Math.pow(10,12)+Math.random()*9*Math.pow(10,12)).toString(36),
       id_produto,
       qtde,
       valor_unitario,
-      data_entrada
+      data_saida
   }
 
-
+  function mostrarnome(idproduto){
+    let nome= "";
+     const listarproduto = JSON.parse(localStorage.getItem("cd-produtos") || "[]");
+     listarproduto.
+                  filter(value => value.id ==idproduto).
+                  map(value => {
+                   
+                  nome=value.descricao;
+  
+                      
+  
+                })
+          return nome;
+          
+    }
 
   // function atualizarEstoque(idProduto, quantidade, valor) {
   //   const estoque = JSON.parse(localStorage.getItem("cd-estoques") || "[]");
@@ -48,12 +63,22 @@ export default function Cadastroentrada(){
   //   localStorage.setItem("cd-estoques", JSON.stringify(estoque));
   // }
 
+ const verificarestoque=(qtd)=>{
+      if(qtd>qtd_estoque){
+        alert("Quantidade digitada é maior que a quantidade no estoque!");
+        return false;
+      }else{
+        setQtde(qtd);
+        return true;
+      }
+  }
+
   function atualizarEstoque(idProduto, quantidade, valor) {
     const estoque = JSON.parse(localStorage.getItem("cd-estoques") || "[]");
     const produtoExistente = estoque.find(item => item.id_produto === idProduto);
   
     if (produtoExistente) {
-      const soma = parseFloat(produtoExistente.qtde) + parseFloat(quantidade);
+      const soma = parseFloat(produtoExistente.qtde) - parseFloat(quantidade);
       const dadosNovos = estoque.map(item => {
         if (item.id_produto === idProduto) {
           return {
@@ -84,6 +109,22 @@ useEffect(()=>{
   mostrarproduto();
 },[])
 
+useEffect(() => {
+  let produtos = JSON.parse(localStorage.getItem("cd-estoques") || "[]");
+ if (id_produto!==""){
+
+
+  let linha = produtos.find((produto) => produto.id_produto === id_produto);
+
+  if (linha) {
+    setValor_unitario(linha.valor_unitario);
+    setQtd_estoque(linha.qtde);
+
+  }
+}
+}, [id_produto]);
+
+
   function salvardados(e){
     e.preventDefault();
 
@@ -94,20 +135,20 @@ useEffect(()=>{
   i++;
  else if(valor_unitario==="" || valor_unitario===0)
  i++;
- else if(data_entrada==="")
+ else if(data_saida==="")
  i++;
 if(i===0)
  {
-   const  banco =JSON.parse(localStorage.getItem("cd-entradas")|| "[]");
+   const  banco =JSON.parse(localStorage.getItem("cd-saidas")|| "[]");
   
-   banco.push(entrada);
+   banco.push(saida);
  
-    localStorage.setItem("cd-entradas",JSON.stringify(banco));
+    localStorage.setItem("cd-saidas",JSON.stringify(banco));
    
     atualizarEstoque(id_produto,qtde,valor_unitario) 
  
-    alert("Entrada salvo com sucesso");
-    navigate('/listaentrada');
+    alert("Saída salva com sucesso");
+    navigate('/listasaida');
 
 
  }else{
@@ -116,7 +157,7 @@ if(i===0)
   }
   function mostrarproduto(){
    
-     setProduto(JSON.parse(localStorage.getItem("cd-produtos") || "[]"));
+     setProduto(JSON.parse(localStorage.getItem("cd-estoques") || "[]"));
  
     }
   return(
@@ -127,7 +168,7 @@ if(i===0)
         <Menu />
         </div>
         <div className='principal'>
-        <Head title="Cadastro de Entrada" />
+        <Head title="Cadastro de Saídas" />
         <div className='form-container'>
         <form className='form-cadastro' onSubmit={salvardados} >
             <input 
@@ -141,15 +182,25 @@ if(i===0)
                 {
                   produto.map((linha)=>{
                     return(
-                      <option value={linha.id}>{linha.descricao}</option>
+                      <option value={linha.id_produto}>{mostrarnome(linha.id_produto)}</option>
                     )
                   })
                 }
               </select>
+              <p>
+                Quantidade no estoque 
+                <strong>
+                {
+                qtd_estoque
+              }
+                  </strong> 
+
+              </p>
+
             <input 
                 type='number' 
                 value={qtde}
-                onChange={e=>setQtde(e.target.value)}
+                onChange={e=>verificarestoque(e.target.value)}
                 placeholder='Digite a quantidade'
              />
          
@@ -161,9 +212,9 @@ if(i===0)
             />
             <input 
                     type='date' 
-                    value={data_entrada}
-                    onChange={e=>setData_entrada(e.target.value)}
-                    placeholder='Data da Entrada' 
+                    value={data_saida}
+                    onChange={e=>setData_sainda(e.target.value)}
+                    placeholder='Data da Saída' 
             />
             <div className='acao'>
             <button className='btn-save'>

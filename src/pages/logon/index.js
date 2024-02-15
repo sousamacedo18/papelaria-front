@@ -1,24 +1,33 @@
-import './styles.css'
-import Logo from '../../assets/img/logo.jpg'
-import {useNavigate} from 'react-router-dom';
+import React from 'react';
+import ReactDOM from 'react-dom';
+import './styles.css'; // Import Bootstrap CSS here
+import { Button, Navbar, Container, Row, Col } from 'react-bootstrap';
+import Logo from '../../assets/img/logo1.jpg';
+import { useNavigate } from 'react-router-dom';
 import { useState } from 'react';
-
-
 
 export default function Logon(){
 const navigate = useNavigate();
 const [email,setEmail]=useState();
 const [senha,setSenha]=useState();
+const [id,setId] = useState(0);
+const [nome,setNome] = useState("");
+
 const log={
-    email
+    id,
+    email,
+    nome
 }
 const logar =(e)=>{
 e.preventDefault();
 let banco =JSON.parse(localStorage.getItem("cd-usuarios") || "[]");
 
 let dadosnovos = banco.filter(item => item.email === email && item.senha === senha);
-console.log(banco);
 if(dadosnovos.length>0){
+    //armazenandno dados do usuário logado no sistema.
+    setNome(dadosnovos[0].nome);
+    setId(dadosnovos[0].id);
+
     sessionStorage.setItem("log-usuario",JSON.stringify(log));
     navigate('/dashboard');
 }else{
@@ -43,8 +52,8 @@ if(dadosnovos.length>0){
                 value={senha}
                 onChange={e=>setSenha(e.target.value)}
                 />
-                <button type="submit">Entrar</button>
-                <a href="#">Novo Cadastro</a>
+                <Button className='btn-entrar' type="submit">Entrar</Button>
+               <p>Não tenho um conta? <a href="#">Novo Cadastro</a></p>
             </form>
         </section>
     </div>
