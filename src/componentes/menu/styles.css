@@ -4,30 +4,25 @@ nav{
     margin-top: 20px;
 }
 .link{
-
+    display: flex;
     text-decoration: none;
-    background-color: #007bff;
+    /*background-color: #007bff;*/
+    background-color: white;
     border-radius: 5px;
+    border: #a29d7f 1px solid;
+    align-items: center;
     padding: 10px;
-    color:#ffffff;
+   /* color:#ffffff;*/
+    color:#9c8680;
     width: 85%;
     margin:auto;
     margin-bottom: 8px;
 }
 .link:hover{
- background-color:#0056b3 ;
+ background-color:#a29d7f ;
+ color: white;
 }
-.link_estoque{
+.icon-menu{
+    margin-right: 10px;
+}
 
-    text-decoration: none;
-    background-color: red;
-    border-radius: 5px;
-    padding: 10px;
-    color:#ffffff;
-    width: 85%;
-    margin:auto;
-    margin-bottom: 8px;
-}
-.link_estoque:hover{
- background-color:rebeccapurple ;
-}

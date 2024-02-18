@@ -27,7 +27,9 @@ const navigate=useNavigate();
 
     function formatReal(valor) {
       let valorFormatado = valor.replace(/\D/g, ''); // Remove caracteres não numéricos
-      valorFormatado = valorFormatado.replace(/(\d{2})(\d{3})(\d{3})(\d{2})/, '$1.$2.$3,$4'); // Formata com pontos e vírgulas
+      valorFormatado = valorFormatado.replace(/(\d{1,})(\d{2})$/, '$1,$2'); // Formata com vírgula
+      valorFormatado = valorFormatado.replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1.'); // Adiciona pontos
+    
       return `R$ ${valorFormatado}`;
     }
     function formatarData(data) {
@@ -88,7 +90,7 @@ const navigate=useNavigate();
         <table className="table">
            <tr>
                 <th>Id</th>
-                <th>id produto </th>
+                <th>Produto </th>
                 <th>Quantidade</th>
                 <th>Valor Unitário</th>
                 <th>Data Entrada</th>

@@ -7,6 +7,9 @@ import { MdCancel } from "react-icons/md";
 import { FaSave } from "react-icons/fa";
 import {useNavigate} from 'react-router-dom';
 import Head from '../../componentes/Head';
+import Modal from 'react-bootstrap/Modal';
+import Button from 'react-bootstrap/Button';
+
 
 
 
@@ -19,6 +22,11 @@ export default function Cadastrosaida(){
   const [data_saida,setData_sainda]  = useState("");
   const [produto,setProduto] = useState([]);
   const [qtd_estoque,setQtd_estoque] =useState(0);
+
+  const [show, setShow] = useState(false);
+
+  const handleClose = () => setShow(false);
+  const handleShow = () => setShow(true);
 
   
   const saida={
@@ -161,8 +169,9 @@ if(i===0)
  
     }
   return(
+    
     <div className="dashboard-container">
-      
+
         <div className='menu'>
      
         <Menu />
@@ -170,6 +179,22 @@ if(i===0)
         <div className='principal'>
         <Head title="Cadastro de Saídas" />
         <div className='form-container'>
+        <Modal show={show} onHide={handleClose}>
+        <Modal.Header closeButton>
+          <Modal.Title>Título do Modal</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          Conteúdo do Modal...
+        </Modal.Body>
+        <Modal.Footer>
+          <Button variant="secondary" onClick={handleClose}>
+            Fechar
+          </Button>
+          <Button variant="primary" onClick={handleClose}>
+            Salvar
+          </Button>
+        </Modal.Footer>
+      </Modal>
         <form className='form-cadastro' onSubmit={salvardados} >
             <input 
             type='text'
@@ -177,6 +202,9 @@ if(i===0)
             onChange={e=>setId_produto(e.target.value)}
              placeholder='Digite o id do produto'
               />
+              <Button variant="primary" onClick={handleShow}>
+                Abrir Modal
+              </Button>
               <select value={id_produto} onChange={e=>setId_produto(e.target.value)}  >
                 <option>Selecione um produto</option>
                 {

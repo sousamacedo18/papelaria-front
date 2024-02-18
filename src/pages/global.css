@@ -3,23 +3,28 @@
     margin:0;
 }
 .dashboard-container{
-    background-color: #0056b3;
+    
     height: 100vh;
     display: flex;
     flex-direction: row;
     width: 90%;
     margin:auto;
+    background-color: white;
 }
 .menu{
     width: 20%;
     background-color: #ffff;
     margin: 5px;
+    border: 0.5px solid silver;
+    border-radius: 5px;
 }
 .principal{
     width: 80%;
     background-color: #f8f8f8;
+    border: 0.5px solid silver;
+    border-radius: 5px;
     margin: 5px;
-    padding: 5px;
+    padding: 15px;
 }
 table{
     width: 100%;
@@ -100,6 +105,9 @@ td{
     flex-direction: row;
     justify-content: space-around;
 }
+.modal {
+    z-index: 1000;
+  }
 .form-container{
    
     display: flex;

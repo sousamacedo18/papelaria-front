@@ -7,6 +7,7 @@ let usuario =JSON.parse(sessionStorage.getItem("log-usuario") || "[]");
 export default function Dashboard(){
    return(
     <div className="dashboard-container">
+        
         <div className='menu'>
      
         <Menu />
