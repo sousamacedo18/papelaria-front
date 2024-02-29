@@ -10,6 +10,8 @@ import {Link} from 'react-router-dom';
 import Head from '../../componentes/Head';
 import { useNavigate} from 'react-router-dom';
 
+
+
 export default function Listaestoque(){
 const [dados,setDados] = useState([]);
 const [banco,setBanco] = useState([]);
@@ -122,7 +124,11 @@ const navigate=useNavigate();
                }) 
             }
 
+
         </table>
+        <div>
+
+    </div>
         </div>
     </div>
 
