@@ -64,7 +64,7 @@ if(i==0)
 
         )
   
-  // navigate('/listausuario');
+  navigate('/listausuario');
  }else{
   alert("Verifique! Há campos vazios!")
  }
