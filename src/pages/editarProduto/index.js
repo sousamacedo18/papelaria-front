@@ -7,6 +7,7 @@ import { MdCancel } from "react-icons/md";
 import { FaSave } from "react-icons/fa";
 import {useNavigate,useParams} from 'react-router-dom';
 import Head from '../../componentes/Head';
+import api from '../../server/api';
 
 export default function Editarproduto(){
   let { id } = useParams();
@@ -33,45 +34,54 @@ export default function Editarproduto(){
    
   },[])
   async function mostrardados(idu) {
-    let listaUser =JSON.parse(localStorage.getItem("cd-produtos"));
-      
-           listaUser.
-               filter(value => value.id ==idu).
-               map(value => {
-                   setStatus(value.status);
-                   setDescricao(value.descricao);
-                   setEstoque_minino(value.estoque_minimo);
-                   setEstoque_maximo(value.estoque_maximo);
-                   
-       
-       })
+    api.get(`/produto/${idu}`)
+    .then(res=>{
+      console.log(res.data.produto);
+      if(res.status===200){
+        setStatus(res.data.produto[0].status);
+        setDescricao(res.data.produto[0].descricao);
+        setEstoque_minino(res.data.produto[0].estoque_minimo);
+        setEstoque_maximo(res.data.produto[0].estoque_maximo);
+      }
+    })
      }
 
 
-  function salvardados(e){
-    e.preventDefault();
-
-  let i=0;
-  if(status=="")
-  i++;
- else if(descricao=="")
-  i++;
- else if(estoque_maximo===0 || estoque_maximo==="")
- i++;
- else if(estoque_minimo===0 || estoque_minimo==="")
- i++;
-if(i==0)
- {
-   const banco =JSON.parse(localStorage.getItem("cd-produtos") || "[]");
-   let dadosnovos = banco.filter(item => item.id !== id);
-   dadosnovos.push(produto);
-   localStorage.setItem("cd-produtos",JSON.stringify(dadosnovos));
-   alert( "Produto salvo com sucesso");
-   navigate('/listaproduto');
- }else{
-  alert("Verifique! Há campos vazios!")
- }
+     function salvardados(e) {
+      e.preventDefault();
+  
+      let i = 0;
+      
+      if (status === "") {
+          i++;
+      } else if (descricao === "") {
+          i++;
+      } else if (estoque_maximo === 0 || estoque_maximo === "") {
+          i++;
+      } else if (estoque_minimo === 0 || estoque_minimo === "") {
+          i++;
+      } 
+  
+      if (i === 0) {
+          api.put(`/produto/${id}`, produto, {
+                  headers: {
+                      "Content-Type": "application/json"
+                  }
+              })
+              .then(function(response) {
+                  console.log(response.data);
+                  alert(response.data.mensagem);
+                  navigate('/listaproduto');
+              })
+              .catch(function(error) {
+                  console.error(error);
+                  alert("Erro ao tentar salvar os dados.");
+              });
+      } else {
+          alert("Verifique! Há campos vazios ou inválidos!");
+      }
   }
+  
  
   return(
     <div className="dashboard-container">

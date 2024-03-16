@@ -3,13 +3,15 @@ import '../../pages/global.css';
 import Logo from '../../assets/img/logo.jpg'
 import Menu from '../../componentes/menu'
 import{ FiEdit,FiTrash,FiDelete, FiFilePlus }from "react-icons/fi";
-import { Bs5Circle } from "react-icons/bs";
+
 import { confirmAlert } from 'react-confirm-alert'; // Import
 import 'react-confirm-alert/src/react-confirm-alert.css'; // Import css
 import {Link} from 'react-router-dom';
 import moment from 'moment';
 import Head from '../../componentes/Head';
 import { useNavigate} from 'react-router-dom';
+import api from '../../server/api';
+
 
 export default function Listaentrada(){
 const [dados,setDados] = useState([]);
@@ -22,7 +24,11 @@ const navigate=useNavigate();
 
     function mostrardados()
     {
-      setBanco(JSON.parse(localStorage.getItem("cd-entradas") || "[]"));
+      api.get('/entrada')
+      .then(res=>{
+        console.log(res.data.entradas)
+        setBanco(res.data.entradas)
+      })
     }
 
     function formatReal(valor) {
@@ -90,7 +96,8 @@ const navigate=useNavigate();
         <table className="table">
            <tr>
                 <th>Id</th>
-                <th>Produto </th>
+                <th>ID_PRODUTO</th>
+                <th>PRODUTO</th>
                 <th>Quantidade</th>
                 <th>Valor Unitário</th>
                 <th>Data Entrada</th>
@@ -102,9 +109,10 @@ const navigate=useNavigate();
                 return(
                   <tr key={linha.toString()}>
                     <td>{linha.id}</td>    
-                    <td>{mostrarnome(linha.id_produto)}</td>    
-                    <td>{linha.qtde}</td>    
-                    <td>{formatReal(linha.valor_unitario)}</td>    
+                    <td>{linha.id_produto}</td>    
+                    <td>{linha.descricao}</td>    
+                    <td>{linha.quantidade}</td>    
+                    <td>{linha.valor_unitario}</td>    
                     <td>{formatarData(linha.data_entrada)}</td>    
                     <td className='botoes'> 
                     <Link to={`/editarentrada/${linha.id}`}>

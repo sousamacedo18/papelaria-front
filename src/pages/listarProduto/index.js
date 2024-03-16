@@ -9,6 +9,7 @@ import 'react-confirm-alert/src/react-confirm-alert.css'; // Import css
 import {Link} from 'react-router-dom';
 import Head from '../../componentes/Head';
 import { useNavigate} from 'react-router-dom';
+import api from '../../server/api';
 
 export default function Listaproduto(){
 const [dados,setDados] = useState([]);
@@ -26,7 +27,11 @@ const navigate=useNavigate();
 
     function mostrardados()
     {
-      setBanco(JSON.parse(localStorage.getItem("cd-produtos") || "[]"));
+      api.get('/produto')
+      .then(res=>{
+        console.log(res.data.produtos)
+        setBanco(res.data.produtos)
+      })
     }
   
      const  apagar = (id) => {
@@ -37,10 +42,16 @@ const navigate=useNavigate();
           {
             label: 'Sim',
             onClick: () => {
-              let dadosnovos = banco.filter(item => item.id !== id);
-              localStorage.setItem("cd-produtos", JSON.stringify(dadosnovos));
-              setBanco(dadosnovos); // Atualiza o estado com os dados filtrados
-              alert(`Você apagou o produto id:${id}`);
+              api.delete(`/produto/${id}`)
+              .then(res=>{
+               if(res.status===200){
+                 alert(`Você apagou o produto de id:${id}`);
+                 mostrardados();
+               }else{
+                 alert("houve um problema no servidor")
+               }
+              })
+              
             }
             
           },

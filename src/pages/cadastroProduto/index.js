@@ -7,6 +7,7 @@ import { MdCancel } from "react-icons/md";
 import { FaSave } from "react-icons/fa";
 import {useNavigate} from 'react-router-dom';
 import Head from '../../componentes/Head';
+import api from '../../server/api';
 
 
 //fiz uma alteração aqui
@@ -40,11 +41,14 @@ export default function Cadastroproduto(){
           i++;
         if(i===0)
         {
-          const banco =JSON.parse(localStorage.getItem("cd-produtos") || "[]");
-          banco.push(produto);
-          localStorage.setItem("cd-produtos",JSON.stringify(banco));
-          alert("Produto salvo com sucesso");
-          navigate('/listaproduto');
+          api.post('/produto',produto,
+          {headers:{"Content-Type":"application/json"}})
+          .then(function(response){
+            console.log(response.data)
+            alert(response.data.mensagem);
+            navigate('/listaproduto');
+          })
+         
         }else{
           alert("Verifique! Há campos vazios!")
         }

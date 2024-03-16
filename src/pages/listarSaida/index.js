@@ -10,6 +10,7 @@ import {Link} from 'react-router-dom';
 import moment from 'moment';
 import Head from '../../componentes/Head';
 import { useNavigate} from 'react-router-dom';
+import api from '../../server/api';
 
 export default function Listaentrada(){
 const [dados,setDados] = useState([]);
@@ -22,7 +23,12 @@ const navigate=useNavigate();
 
     function mostrardados()
     {
-      setBanco(JSON.parse(localStorage.getItem("cd-saidas") || "[]"));
+      //setBanco(JSON.parse(localStorage.getItem("cd-saidas") || "[]"));
+    api.get("/saida").
+    then((resposta)=>{
+      setBanco(resposta.data.saidas);
+    })
+    
     }
 
     function formatReal(valor) {
@@ -102,9 +108,9 @@ const navigate=useNavigate();
                 return(
                   <tr key={linha.toString()}>
                     <td>{linha.id}</td>    
-                    <td>{mostrarnome(linha.id_produto)}</td>    
-                    <td>{linha.qtde}</td>    
-                    <td>{formatReal(linha.valor_unitario)}</td>    
+                    <td>{linha.descricao}</td>    
+                    <td>{linha.quantidade}</td>    
+                    <td>{linha.valor_unitario}</td>    
                     <td>{formatarData(linha.data_saida)}</td>    
                     <td className='botoes'> 
                     <Link to={`/editarentrada/${linha.id}`}>

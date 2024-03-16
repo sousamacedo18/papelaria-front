@@ -7,6 +7,8 @@ import { MdCancel } from "react-icons/md";
 import { FaSave } from "react-icons/fa";
 import {useNavigate} from 'react-router-dom';
 import Head from '../../componentes/Head';
+import api from '../../server/api';
+
 
 
 
@@ -23,7 +25,7 @@ export default function Cadastroentrada(){
   const entrada={
       id:Date.now().toString(36)+Math.floor(Math.pow(10,12)+Math.random()*9*Math.pow(10,12)).toString(36),
       id_produto,
-      qtde,
+      quantidade:qtde,
       valor_unitario,
       data_entrada
   }
@@ -98,16 +100,14 @@ useEffect(()=>{
  i++;
 if(i===0)
  {
-   const  banco =JSON.parse(localStorage.getItem("cd-entradas")|| "[]");
-  
-   banco.push(entrada);
- 
-    localStorage.setItem("cd-entradas",JSON.stringify(banco));
-   
-    atualizarEstoque(id_produto,qtde,valor_unitario) 
- 
-    alert("Entrada salvo com sucesso");
+  api.post('/entrada',entrada,
+  {headers:{"Content-Type":"application/json"}})
+  .then(function(response){
+    console.log(response.data)
+    alert(response.data.mensagem);
     navigate('/listaentrada');
+  })
+   
 
 
  }else{
@@ -115,8 +115,12 @@ if(i===0)
  }
   }
   function mostrarproduto(){
+    api.get('/produto',
+    {headers:{"Content-Type":"application/json"}})
+    .then(function(response){
+        setProduto(response.data.produtos);
+    })
    
-     setProduto(JSON.parse(localStorage.getItem("cd-produtos") || "[]"));
  
     }
   return(

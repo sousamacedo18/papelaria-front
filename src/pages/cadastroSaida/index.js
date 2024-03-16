@@ -9,6 +9,7 @@ import {useNavigate} from 'react-router-dom';
 import Head from '../../componentes/Head';
 import Modal from 'react-bootstrap/Modal';
 import Button from 'react-bootstrap/Button';
+import api from '../../server/api'
 
 
 
@@ -72,13 +73,14 @@ export default function Cadastrosaida(){
   // }
 
  const verificarestoque=(qtd)=>{
-      if(qtd>qtd_estoque){
-        alert("Quantidade digitada é maior que a quantidade no estoque!");
-        return false;
-      }else{
-        setQtde(qtd);
-        return true;
-      }
+  setQtde(qtd);
+  // if(qtd>qtd_estoque){
+  //       alert("Quantidade digitada é maior que a quantidade no estoque!");
+  //       return false;
+  //     }else{
+  //       setQtde(qtd);
+  //       return true;
+  //     }
   }
 
   function atualizarEstoque(idProduto, quantidade, valor) {
@@ -147,16 +149,15 @@ useEffect(() => {
  i++;
 if(i===0)
  {
-   const  banco =JSON.parse(localStorage.getItem("cd-saidas")|| "[]");
-  
-   banco.push(saida);
- 
-    localStorage.setItem("cd-saidas",JSON.stringify(banco));
-   
-    atualizarEstoque(id_produto,qtde,valor_unitario) 
- 
-    alert("Saída salva com sucesso");
-    navigate('/listasaida');
+    api.post("/saida",saida,
+    {headers:{"Content-Type":"application/json"}})
+    .then(function(response){
+      console.log(response.data)
+      alert(response.data.mensagem);
+      navigate('/listasaida');
+    })
+    
+    
 
 
  }else{
@@ -165,8 +166,11 @@ if(i===0)
   }
   function mostrarproduto(){
    
-     setProduto(JSON.parse(localStorage.getItem("cd-estoques") || "[]"));
- 
+    // setProduto(JSON.parse(localStorage.getItem("cd-estoques") || "[]"));
+    api.get("/produto")
+    .then((resposta)=>{
+       setProduto(resposta.data.produtos)
+    })
     }
   return(
     
@@ -210,7 +214,7 @@ if(i===0)
                 {
                   produto.map((linha)=>{
                     return(
-                      <option value={linha.id_produto}>{mostrarnome(linha.id_produto)}</option>
+                      <option value={linha.id}>{linha.descricao}</option>
                     )
                   })
                 }
