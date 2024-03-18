@@ -33,7 +33,7 @@ export default function Cadastrosaida(){
   const saida={
       id:Date.now().toString(36)+Math.floor(Math.pow(10,12)+Math.random()*9*Math.pow(10,12)).toString(36),
       id_produto,
-      qtde,
+      quantidade:qtde,
       valor_unitario,
       data_saida
   }

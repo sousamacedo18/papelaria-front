@@ -3,6 +3,7 @@ import Logo from '../../assets/img/logo.jpg'
 import Menu from '../../componentes/menu'
 import Head from '../../componentes/Head';
 
+
 let usuario =JSON.parse(sessionStorage.getItem("log-usuario") || "[]");
 export default function Dashboard(){
    return(
@@ -14,7 +15,7 @@ export default function Dashboard(){
         </div>
         <div className='principal'>
         <Head title="Página Inicial" />
-     
+
         </div>
     </div>
 
