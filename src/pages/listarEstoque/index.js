@@ -9,6 +9,8 @@ import 'react-confirm-alert/src/react-confirm-alert.css'; // Import css
 import {Link} from 'react-router-dom';
 import Head from '../../componentes/Head';
 import { useNavigate} from 'react-router-dom';
+import api from "../../server/api"
+import { FiPrinter } from "react-icons/fi";
 
 
 
@@ -35,7 +37,10 @@ const navigate=useNavigate();
 
     function mostrardados()
     {
-      setBanco(JSON.parse(localStorage.getItem("cd-estoques") || "[]"));
+     // setBanco(JSON.parse(localStorage.getItem("cd-estoques") || "[]"));
+     api.get("/estoque").then((res)=>{
+      setBanco(res.data.estoques);
+     })
     }
     function mostrarnome(idproduto){
       let nome= "";
@@ -86,38 +91,31 @@ const navigate=useNavigate();
         <div className='principal'>
         <Head title="Lista de Estoque de Produtos" />
         <div>
-        <Link to="/cadastroproduto" className='btn-novo'>Novo Cadastro</Link>
+        <Link to="/cadastroproduto" className='btn-novo'>
+          
+          <FiPrinter />
+          </Link>
         </div>
         <table className="table">
            <tr>
                 <th>Id</th>
+                <th>ID Produto</th>
                 <th>Produto</th>
                 <th>Quantidade</th>
                 <th>Valor Unitário</th>
-                <th></th>
-                <th></th>
+
             </tr>
             {
                banco.map((linha)=>{
                 return(
                   <tr key={linha.toString()}>
                     <td>{linha.id}</td>    
-                    <td>{mostrarnome(linha.id_produto)}</td>    
-                    <td>{linha.qtde}</td>    
-                    <td>{formatReal(linha.valor_unitario)}</td>    
+                    <td>{linha.id_produto}</td>    
+                    <td>{linha.descricao}</td>    
+                    <td>{linha.quantidade}</td>    
+                    <td>{linha.valor_unitario}</td>    
          
-                    <td className='botoes'> 
-                    <Link to={`/editarproduto/${linha.id}`}>
-                      <FiEdit size={18} color='#3a5795'  /> 
-                    </Link> 
-                    </td>    
-                    <td className='botoes'> 
-                          <FiTrash 
-                          size={18} 
-                          color='red'
-                          onClick={(e)=>apagar(linha.id)} 
-                          /> 
-                    </td>    
+ 
                     
                   </tr>  
                 )

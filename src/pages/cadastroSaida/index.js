@@ -120,18 +120,10 @@ useEffect(()=>{
 },[])
 
 useEffect(() => {
-  let produtos = JSON.parse(localStorage.getItem("cd-estoques") || "[]");
- if (id_produto!==""){
 
-
-  let linha = produtos.find((produto) => produto.id_produto === id_produto);
-
-  if (linha) {
-    setValor_unitario(linha.valor_unitario);
-    setQtd_estoque(linha.qtde);
-
-  }
-}
+api.get(`/estoque/${id_produto}`).then((res)=>{
+  setQtd_estoque(res.data.estoque[0].quantidade)
+})
 }, [id_produto]);
 
 
@@ -167,9 +159,9 @@ if(i===0)
   function mostrarproduto(){
    
     // setProduto(JSON.parse(localStorage.getItem("cd-estoques") || "[]"));
-    api.get("/produto")
+    api.get("/estoque")
     .then((resposta)=>{
-       setProduto(resposta.data.produtos)
+       setProduto(resposta.data.estoques)
     })
     }
   return(
@@ -214,7 +206,7 @@ if(i===0)
                 {
                   produto.map((linha)=>{
                     return(
-                      <option value={linha.id}>{linha.descricao}</option>
+                      <option value={linha.id_produto}>{linha.descricao}</option>
                     )
                   })
                 }
